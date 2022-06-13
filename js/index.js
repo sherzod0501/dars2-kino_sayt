@@ -5,7 +5,6 @@ const elSelect = document.querySelector(".select");
 
 elResult.textContent = films.length;
 
-let neFilter = [];
 elSelect.innerHTML = "";
 
 let renderGenres = function (arr) {
@@ -86,10 +85,10 @@ elForm.addEventListener("submit", (event) => {
   let selectValue = elSelect.value;
   let selectedMovie = [];
 
-  films.forEach((film) => {
-    if (film.genres.includes(selectValue)) {
-      selectedMovie.push(film);
-    }
+  films.map((film) => {
+    film.genres.includes(selectValue)
+      ? selectedMovie.push(film)
+      : selectedMovie;
   });
 
   elResult.textContent = selectedMovie.length;
