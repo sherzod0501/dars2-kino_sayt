@@ -19,27 +19,65 @@
     </div>
   </header>
 
-  <main class="movie">
+  <main class="movie ">
+
     <div class="container">
+      <!-- <form class="form"> -->
+      <!-- <select class="select" id=""> -->
+      <!-- <option value="action">Action</option>
+              <option value="comedy">Comedy</option>
+              <option value="fantasy">Fantasy</option>
+              <option value="thriller">Thriller</option>
+              <option value="adventure">Adventure</option>
+              <option value="horror">Horror</option>
+              <option value="">Science Fiction</option>
+              <option value="family">Family</option>
+              <option value="animition">Animition</option> -->
+
+      <!-- </select>
+        <button type="submit" class="btn">Search</button> -->
       <p class="movie__result alert alert-info">Search Results: <span class="movie__result-num"></span></p>
+      <!-- </form> -->
+    </div>
+    <div class="container d-flex">
 
-      <form class="form">
-        <select class="select" id="">
-          <!-- <option value="action">Action</option>
-          <option value="comedy">Comedy</option>
-          <option value="fantasy">Fantasy</option>
-          <option value="thriller">Thriller</option>
-          <option value="adventure">Adventure</option>
-          <option value="horror">Horror</option>
-          <option value="">Science Fiction</option>
-          <option value="family">Family</option>
-          <option value="animition">Animition</option> -->
+      <div class="col-4 me-5">
+        <form class="form">
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="visually-hidden">Text</label>
+            <input type="text" placeholder="email" class="form-control" id="exampleInputEmail1">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="visually-hidden">number</label>
+            <input type="number" placeholder="number" class="form-control" id="exampleInputPassword1">
+          </div>
+          <select class="select form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+            <option selected>All</option>
+            <option value="1">Horror</option>
+            <option value="2">Fun</option>
+            <option value="3">Danger</option>
+          </select>
+          <select class="form-select form-select-lg mb-3" aria-label=".form-select-lg example">
+            <option selected>Rating (high to low)</option>
+            <option value="1">Horror</option>
+            <option value="2">Fun</option>
+            <option value="3">Danger</option>
+          </select>
+          <button type="submit" class="col-12 btn btn-primary fs-5">Search</button>
+        </form>
 
-        </select>
-        <button type="submit" class="btn">Search</button>
-      </form>
+
+        <h2 class="text-center mt-3 fs-1">Bookmarked movies</h2>
+        <form class="TitleForm">
+          <!-- <div class="buttom mt-3 border border-secondary p-3">
+            <b class="text fs-5 d-block mb-2">Avangers: Infinity War</b>
+            <button class="col-3 btn btn-sm btn-danger border border-danger p-2">Remove</button>
+          </div> -->
+        </form>
+      </div>
       <ul class="movie__list d-flex flex-wrap justify-content-between m-0 p-0">
       </ul>
+
     </div>
   </main>
 

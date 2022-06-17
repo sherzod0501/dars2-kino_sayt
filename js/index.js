@@ -2,6 +2,7 @@ const elMovieList = document.querySelector(".movie__list");
 const elResult = document.querySelector(".movie__result-num");
 const elForm = document.querySelector(".form");
 const elSelect = document.querySelector(".select");
+const elFormTitle = document.querySelector(".TitleForm");
 
 elResult.textContent = films.length;
 
@@ -24,6 +25,32 @@ let renderGenres = function (arr) {
   });
 };
 
+let FilmBookmark = [];
+
+elMovieList.addEventListener("click", (evt) => {
+  if (evt.target.matches(".bookmarks")) {
+    let BookmarkId = Number(evt.target.dataset.BookmarkId);
+    let foundBookmark = films.find((film) => film.id == BookmarkId);
+    if (!FilmBookmark.includes(foundBookmark)) {
+      FilmBookmark.push(foundBookmark);
+    }
+  }
+
+  elFormTitle.innerHTML = null;
+
+  renderMovies(FilmBookmark, elFormTitle);
+});
+
+elFormTitle.addEventListener("click", (evt) => {
+  if (evt.target.matches(".remove")) {
+    let DeleteId = Number(evt.target.dataset.DeleteId);
+    let founDeleteId = FilmBookmark.findIndex((film) => film.id === DeleteId);
+    elFormTitle.innerHTML = null;
+    films.splice(founDeleteId, 1);
+    renderMovies(founDeleteId, elFormTitle);
+  }
+});
+
 let renderMovies = function (filmArr, where) {
   filmArr.forEach((movie) => {
     //CREATE ELEMENT
@@ -34,34 +61,51 @@ let renderMovies = function (filmArr, where) {
     const newLanguage = document.createElement("p");
     const newYear = document.createElement("p");
     const newButton = document.createElement("a");
+    const newBookmark = document.createElement("button");
+    const newBookmarDiv = document.createElement("div");
+    const newName = document.createElement("b");
+    const newDeletBtn = document.createElement("button");
 
     //SET ATTTIBUTE
     newLi.setAttribute("class", "card mb-3");
-    newLi.style.width = "18rem";
+    newLi.style.width = "16rem";
     newImg.classList.add("card-img-top");
     newImg.setAttribute("src", movie.poster);
     newDiv.classList.add("card-body");
     newTitle.classList.add("card-title");
     newLanguage.classList.add("card-text");
     newYear.classList.add("card-text");
+    newBookmark.setAttribute("class", "bookmarks btn btn-outline-success mt-3");
     newButton.setAttribute("class", "btn btn-danger");
     newButton.setAttribute(
       "href",
       `https://www.youtube.com/watch?v=${movie.youtubeId}`
     );
+    newBookmarDiv.setAttribute(
+      "class",
+      "buttom mt-3 border border-secondary p-3"
+    );
+    newName.setAttribute("class", "text fs-5 d-block mb-2");
+    newDeletBtn.setAttribute(
+      "class",
+      "remove col-3 btn btn-sm btn-danger border border-danger p-2"
+    );
 
+    newBookmarDiv.append(newName, newDeletBtn);
+    elFormTitle.append(newBookmarDiv);
+
+    newName.textContent = movie.title;
     newTitle.textContent = movie.title;
     newYear.textContent = movie.year;
+
+    newDeletBtn.textContent = "Remove";
     newButton.textContent = "Watch Trailer";
+    newBookmark.textContent = "Bookmarked";
 
     let genreList = document.createElement("ul");
 
-    movie.genres.forEach((genre) => {
-      let genreItem = document.createElement("li");
-
-      genreItem.textContent = genre;
-      genreList.appendChild(genreItem);
-    });
+    newBookmark.dataset.BookmarkId = movie.id;
+    newDeletBtn.dataset.DeleteId = movie.id;
 
     //APPEND
     where.appendChild(newLi);
@@ -70,6 +114,7 @@ let renderMovies = function (filmArr, where) {
     newDiv.appendChild(newTitle);
     newDiv.appendChild(newYear);
     newDiv.appendChild(newButton);
+    newDiv.appendChild(newBookmark);
     newDiv.appendChild(genreList);
   });
 };
