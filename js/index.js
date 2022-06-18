@@ -124,6 +124,7 @@ elForm.addEventListener("submit", (event) => {
 });
 
 let renderBookmark = function (arr, where) {
+  elFormTitle.innerHTML = null;
   arr.forEach((mark) => {
     const newBookmarDiv = document.createElement("div");
     const newName = document.createElement("b");
