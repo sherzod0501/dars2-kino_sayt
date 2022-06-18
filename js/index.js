@@ -37,18 +37,17 @@ elMovieList.addEventListener("click", (evt) => {
   }
 
   elFormTitle.innerHTML = null;
-
-  renderMovies(FilmBookmark, elFormTitle);
+  renderBookmark(FilmBookmark, elFormTitle);
 });
 
 elFormTitle.addEventListener("click", (evt) => {
-  if (evt.target.matches(".remove")) {
-    let DeleteId = Number(evt.target.dataset.DeleteId);
-    let founDeleteId = FilmBookmark.findIndex((film) => film.id === DeleteId);
+  if (evt.target.matches(".remove-btn")) {
+    let DeleteBtnId = Number(evt.target.dataset.DeleteBtnId);
+    let founDeleteId = FilmBookmark.findIndex((film) => film.id == DeleteBtnId);
+    FilmBookmark.splice(founDeleteId, 1);
     elFormTitle.innerHTML = null;
-    films.splice(founDeleteId, 1);
-    renderMovies(founDeleteId, elFormTitle);
   }
+  renderBookmark(FilmBookmark, elFormTitle);
 });
 
 let renderMovies = function (filmArr, where) {
@@ -62,9 +61,6 @@ let renderMovies = function (filmArr, where) {
     const newYear = document.createElement("p");
     const newButton = document.createElement("a");
     const newBookmark = document.createElement("button");
-    const newBookmarDiv = document.createElement("div");
-    const newName = document.createElement("b");
-    const newDeletBtn = document.createElement("button");
 
     //SET ATTTIBUTE
     newLi.setAttribute("class", "card mb-3");
@@ -81,31 +77,17 @@ let renderMovies = function (filmArr, where) {
       "href",
       `https://www.youtube.com/watch?v=${movie.youtubeId}`
     );
-    newBookmarDiv.setAttribute(
-      "class",
-      "buttom mt-3 border border-secondary p-3"
-    );
-    newName.setAttribute("class", "text fs-5 d-block mb-2");
-    newDeletBtn.setAttribute(
-      "class",
-      "remove col-3 btn btn-sm btn-danger border border-danger p-2"
-    );
 
-    newBookmarDiv.append(newName, newDeletBtn);
-    elFormTitle.append(newBookmarDiv);
-
-    newName.textContent = movie.title;
     newTitle.textContent = movie.title;
     newYear.textContent = movie.year;
+    // elFormTitle.textContent = FilmBookmark.length;
 
-    newDeletBtn.textContent = "Remove";
     newButton.textContent = "Watch Trailer";
     newBookmark.textContent = "Bookmarked";
 
     let genreList = document.createElement("ul");
 
     newBookmark.dataset.BookmarkId = movie.id;
-    newDeletBtn.dataset.DeleteId = movie.id;
 
     //APPEND
     where.appendChild(newLi);
@@ -140,3 +122,29 @@ elForm.addEventListener("submit", (event) => {
 
   renderMovies(selectedMovie, elMovieList);
 });
+
+let renderBookmark = function (arr, where) {
+  arr.forEach((mark) => {
+    const newBookmarDiv = document.createElement("div");
+    const newName = document.createElement("b");
+    const newDeletBtn = document.createElement("button");
+
+    newBookmarDiv.setAttribute(
+      "class",
+      "buttom mt-3 border border-secondary p-3"
+    );
+    newName.setAttribute("class", "text fs-5 d-block mb-2");
+    newDeletBtn.setAttribute(
+      "class",
+      " col-3 btn btn-sm btn-danger border border-danger p-2"
+    );
+    newDeletBtn.classList.add("remove-btn");
+    newDeletBtn.dataset.DeleteBtnId = mark.id;
+    newDeletBtn.textContent = "Remove";
+    newName.textContent = mark.title;
+
+    newBookmarDiv.append(newName);
+    newBookmarDiv.append(newDeletBtn);
+    where.append(newBookmarDiv);
+  });
+};
