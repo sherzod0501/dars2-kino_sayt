@@ -4,6 +4,11 @@ const elForm = document.querySelector(".form");
 const elSelect = document.querySelector(".select");
 const elFormTitle = document.querySelector(".TitleForm");
 
+let FilmBookmark = [];
+
+let storege = window.localStorage;
+let getStorege = JSON.parse(storege.getItem("mark"));
+
 elResult.textContent = films.length;
 
 elSelect.innerHTML = "";
@@ -25,8 +30,6 @@ let renderGenres = function (arr) {
   });
 };
 
-let FilmBookmark = [];
-
 elMovieList.addEventListener("click", (evt) => {
   if (evt.target.matches(".bookmarks")) {
     let BookmarkId = Number(evt.target.dataset.BookmarkId);
@@ -35,7 +38,7 @@ elMovieList.addEventListener("click", (evt) => {
       FilmBookmark.push(foundBookmark);
     }
   }
-
+  storege.setItem("mark", JSON.stringify(FilmBookmark));
   elFormTitle.innerHTML = null;
   renderBookmark(FilmBookmark, elFormTitle);
 });
@@ -46,6 +49,10 @@ elFormTitle.addEventListener("click", (evt) => {
     let founDeleteId = FilmBookmark.findIndex((film) => film.id == DeleteBtnId);
     FilmBookmark.splice(founDeleteId, 1);
     elFormTitle.innerHTML = null;
+    storege.setItem("mark", JSON.stringify(FilmBookmark));
+    if (FilmBookmark.length === 0) {
+      storege.removeItem("mark");
+    }
   }
   renderBookmark(FilmBookmark, elFormTitle);
 });
@@ -149,3 +156,4 @@ let renderBookmark = function (arr, where) {
     where.append(newBookmarDiv);
   });
 };
+renderBookmark(getStorege, elFormTitle);
